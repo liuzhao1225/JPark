@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>五股深度分析报告 — 2026.02.11</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<style>
+  :root {
+    --bg: #f8f9fb;
+    --card: #fff;
+    --border: #e5e7eb;
+    --text: #1a1a2e;
+    --text2: #555;
+    --accent: #2563eb;
+    --red: #dc2626;
+    --green: #16a34a;
+    --orange: #ea580c;
+    --purple: #7c3aed;
+    --tag-bg: #eef2ff;
+    --tag-text: #4338ca;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 24px 20px 60px; }
+
+  /* Header */
+  .hero { background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%); color: #fff; padding: 48px 40px 36px; border-radius: 16px; margin-bottom: 32px; }
+  .hero h1 { font-size: 32px; font-weight: 700; margin-bottom: 12px; letter-spacing: 1px; }
+  .hero .meta { font-size: 14px; opacity: .85; line-height: 1.9; }
+  .hero .meta span { display: inline-block; background: rgba(255,255,255,.15); padding: 2px 10px; border-radius: 6px; margin-right: 8px; margin-bottom: 4px; }
+
+  /* Nav */
+  .toc { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 28px; margin-bottom: 28px; }
+  .toc h3 { font-size: 15px; color: var(--text2); margin-bottom: 10px; }
+  .toc ul { list-style: none; columns: 2; gap: 16px; }
+  .toc li { margin-bottom: 6px; }
+  .toc a { color: var(--accent); text-decoration: none; font-size: 14px; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* Sections */
+  .section { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 28px 32px; margin-bottom: 24px; }
+  .section h2 { font-size: 22px; font-weight: 700; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--accent); color: var(--accent); }
+  .section h3 { font-size: 18px; font-weight: 600; margin: 24px 0 12px; color: var(--text); }
+  .section h4 { font-size: 15px; font-weight: 600; margin: 18px 0 8px; color: var(--text2); }
+  .section p, .section li { font-size: 15px; color: var(--text); margin-bottom: 6px; }
+  .section ul { padding-left: 20px; margin-bottom: 12px; }
+  .section strong { color: var(--text); }
+
+  /* Stock card header */
+  .stock-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+  .stock-header h3 { margin: 0; font-size: 20px; }
+  .stock-header .subtitle { font-size: 14px; color: var(--text2); }
+
+  /* Tags */
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .tag { background: var(--tag-bg); color: var(--tag-text); font-size: 12px; padding: 2px 10px; border-radius: 20px; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 18px; font-size: 14px; }
+  th { background: #f1f5f9; font-weight: 600; text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); white-space: nowrap; }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  tr:hover td { background: #f8fafd; }
+  .num-pos { color: var(--red); font-weight: 600; }
+  .num-neg { color: var(--green); font-weight: 600; }
+  .highlight-cell { background: #fef3c7; font-weight: 600; }
+
+  /* Score badge */
+  .score { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 8px; font-size: 15px; font-weight: 700; margin: 8px 0 12px; }
+  .score-high { background: #dcfce7; color: var(--green); }
+  .score-mid { background: #fef9c3; color: var(--orange); }
+  .score-low { background: #fee2e2; color: var(--red); }
+
+  /* Verdict box */
+  .verdict { background: #f0f4ff; border-left: 4px solid var(--accent); padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 14px 0; font-size: 14px; line-height: 1.8; }
+  .verdict-warn { background: #fef3c7; border-left-color: var(--orange); }
+  .verdict-danger { background: #fee2e2; border-left-color: var(--red); }
+  .verdict-ok { background: #dcfce7; border-left-color: var(--green); }
+
+  /* Mermaid */
+  .mermaid { margin: 16px 0; display: flex; justify-content: center; }
+  .mermaid svg { max-width: 100%; }
+
+  /* Key-value grid */
+  .kv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin: 12px 0; }
+  .kv-item { background: #f8fafd; border-radius: 8px; padding: 10px 14px; }
+  .kv-item .label { font-size: 12px; color: var(--text2); }
+  .kv-item .value { font-size: 18px; font-weight: 700; margin-top: 2px; }
+
+  /* Scenario */
+  .scenario { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0; }
+  .scenario-card { padding: 16px; border-radius: 10px; text-align: center; }
+  .scenario-card h5 { font-size: 14px; margin-bottom: 6px; }
+  .scenario-card .pct { font-size: 28px; font-weight: 800; }
+  .scenario-card p { font-size: 13px; color: var(--text2); margin-top: 6px; }
+  .sc-green { background: #dcfce7; }
+  .sc-yellow { background: #fef9c3; }
+  .sc-red { background: #fee2e2; }
+
+  /* Risk list */
+  .risk-list { counter-reset: risk; list-style: none; padding: 0; }
+  .risk-list li { counter-increment: risk; padding: 10px 14px 10px 44px; position: relative; background: #fff7ed; border-radius: 8px; margin-bottom: 8px; font-size: 14px; }
+  .risk-list li::before { content: counter(risk); position: absolute; left: 12px; top: 10px; width: 24px; height: 24px; background: var(--orange); color: #fff; border-radius: 50%; text-align: center; line-height: 24px; font-size: 13px; font-weight: 700; }
+
+  /* Disclaimer */
+  .disclaimer { text-align: center; color: var(--text2); font-size: 13px; margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--border); }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    .container { padding: 12px; }
+    .hero { padding: 28px 20px 24px; }
+    .hero h1 { font-size: 24px; }
+    .section { padding: 18px 16px; }
+    .toc ul { columns: 1; }
+    table { font-size: 13px; }
+    th, td { padding: 6px 8px; }
+    .scenario { grid-template-columns: 1fr; }
+    .kv-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ========== Hero ========== -->
+<div class="hero">
+  <h1>五股深度分析报告</h1>
+  <div class="meta">
+    <span>2026年2月11日（周三）</span>
+    <span>MCP实时行情 + baostock历史K线 + 网络新闻</span><br>
+    <span>中文在线 SZ300364</span>
+    <span>博纳影业 SZ001330</span>
+    <span>光线传媒 SZ300251</span>
+    <span>捷成股份 SZ300182</span>
+    <span>每日互动 SZ300766</span>
+  </div>
+</div>
+
+<!-- ========== TOC ========== -->
+<div class="toc">
+  <h3>目录导航</h3>
+  <ul>
+    <li><a href="#s1">一、市场热点与核心催化</a></li>
+    <li><a href="#s2">二、五股核心数据速览</a></li>
+    <li><a href="#s3">三、个股深度分析</a></li>
+    <li><a href="#s4">四、技术评分横向对比</a></li>
+    <li><a href="#s5">五、两条主线深度解析</a></li>
+    <li><a href="#s6">六、综合预测与操作建议</a></li>
+    <li><a href="#s7">七、风险提示</a></li>
+  </ul>
+</div>
+
+<!-- ============================= -->
+<!-- Section 1: 市场热点 -->
+<!-- ============================= -->
+<div class="section" id="s1">
+  <h2>一、市场热点与核心催化</h2>
+
+  <h3>1.1 Seedance 2.0 — AI视频的"奇点时刻"</h3>
+
+  <h4>事件时间线</h4>
+  <pre class="mermaid">
+timeline
+    title Seedance 2.0 事件演进
+    2月7日 : Seedance 2.0 小范围内测开始
+    2月8日 : B站UP主影视飓风Tim发布实测视频
+    2月9日 : A股传媒板块应声大涨
+    2月10日 : 27只传媒股涨停
+    2月11日 : 板块分化 博纳+7.46%
+    2月24日 : Seedance 2.0正式发布(计划)
+  </pre>
+
+  <h4>技术突破 — 双分支扩散变换器架构</h4>
+  <table>
+    <tr><th>能力</th><th>描述</th><th>行业意义</th></tr>
+    <tr><td>自运镜/分运镜</td><td>根据情节自动规划镜头切换</td><td>取代真人导演部分工作</td></tr>
+    <tr><td>全方位多模态</td><td>接收文本/图片/视频/音频组合输入</td><td>降低创作门槛</td></tr>
+    <tr><td>音画同步生成</td><td>原生对白、音效、配乐同步</td><td>一站式出片</td></tr>
+    <tr><td>多镜头叙事</td><td>角色一致性 + 场景连贯性</td><td>解决AI视频核心痛点</td></tr>
+  </table>
+
+  <h4>成本革命</h4>
+  <table>
+    <tr><th>品类</th><th>传统成本</th><th>AI成本</th><th>降幅</th></tr>
+    <tr><td>仿真人短剧(部)</td><td>1-3万元</td><td>2,000-4,000元</td><td class="num-pos">60-85%</td></tr>
+    <tr><td>AI漫剧(部)</td><td>30-120万元</td><td>5-15万元</td><td class="num-pos">80%</td></tr>
+    <tr><td>特效镜头(个)</td><td>3,000元 + 1个月</td><td>3元 + 2分钟</td><td class="num-pos">99.9%</td></tr>
+  </table>
+  <p><strong>市场预测：</strong>2026年AI短剧渗透率有望达30-35%，AI漫剧市场规模189.8亿元（同比+276%）。</p>
+  <div class="verdict verdict-warn">
+    <strong>风险点：</strong>Tim发现个人视频素材被纳入训练集，引发版权争议。字节已限制真人素材作为主体参考，要求活体认证。
+  </div>
+
+  <h3>1.2 DeepSeek与国产大模型密集发布</h3>
+  <h4>"春节AI竞赛"格局</h4>
+  <table>
+    <tr><th>厂商</th><th>产品</th><th>发布时间</th><th>亮点</th></tr>
+    <tr><td>百度</td><td>文心大模型5.0</td><td>1月22日</td><td>2.4万亿参数，40余项评测超GPT-5</td></tr>
+    <tr><td>阿里</td><td>Qwen3-Max-Thinking</td><td>1月底</td><td>1万亿参数，媲美GPT-5.2</td></tr>
+    <tr><td>月之暗面</td><td>Kimi K2.5</td><td>1月27日</td><td>原生多模态，已开源</td></tr>
+    <tr><td>腾讯</td><td>混元图像3.0</td><td>1月底</td><td>MoE架构80B参数</td></tr>
+    <tr><td>字节跳动</td><td>Seedance 2.0</td><td>2月7日内测</td><td>导演级AI视频生成</td></tr>
+    <tr><td>快手</td><td>可灵3.0</td><td>1月31日</td><td>All-in-One多模态引擎</td></tr>
+    <tr><td>DeepSeek</td><td>R2（预期）</td><td>原定5月，可能提前</td><td>编程能力 + 多语言推理大幅提升</td></tr>
+  </table>
+
+  <h4>DeepSeek核心进展</h4>
+  <ul>
+    <li><strong>开源周</strong>已发布5个代码库：FlashMLA（推理3000GB/s）、DeepGEMM、DeepEP、DualPipe、3FS</li>
+    <li>API调用成本仅为OpenAI o1的 <strong>1/30</strong></li>
+    <li>日活用户突破4000万</li>
+    <li>R2模型有望提前发布，市场预期持续发酵</li>
+  </ul>
+  <p><strong>行业转向：</strong>从"参数竞赛" → "工程优化"，从"实验室Demo" → "规模化服务"。资本重心转向商业确定性。</p>
+
+  <h3>1.3 春节档叠加</h3>
+  <p>2026年春节档（2月17-25日）为史上最长 <strong>9天</strong>。预售已破亿，《飞驰人生3》领跑。博纳影业为《飞驰人生3》联合出品方。</p>
+</div>
+
+<!-- ============================= -->
+<!-- Section 2: 核心数据 -->
+<!-- ============================= -->
+<div class="section" id="s2">
+  <h2>二、五股2月11日核心数据速览</h2>
+  <div style="overflow-x:auto">
+  <table>
+    <tr>
+      <th>指标</th><th>中文在线</th><th>博纳影业</th><th>光线传媒</th><th>捷成股份</th><th>每日互动</th>
+    </tr>
+    <tr><td><strong>收盘价</strong></td><td>39.80</td><td>13.40</td><td>26.86</td><td>8.85</td><td>48.60</td></tr>
+    <tr>
+      <td><strong>今日涨跌</strong></td>
+      <td class="num-neg">-6.00%</td>
+      <td class="num-pos">+7.46%</td>
+      <td class="num-pos">+5.09%</td>
+      <td class="num-pos">+4.73%</td>
+      <td class="num-pos">+2.75%</td>
+    </tr>
+    <tr>
+      <td><strong>5日涨幅</strong></td>
+      <td class="num-pos">+29.35%</td>
+      <td class="num-pos">+32.94%</td>
+      <td class="num-pos">+28.89%</td>
+      <td class="num-pos">+47.50%</td>
+      <td class="num-pos">+15.52%</td>
+    </tr>
+    <tr>
+      <td><strong>20日涨幅</strong></td>
+      <td class="num-pos">+10.71%</td>
+      <td class="num-pos">+49.89%</td>
+      <td class="num-pos">+51.49%</td>
+      <td class="num-pos">+33.48%</td>
+      <td class="num-pos">+5.88%</td>
+    </tr>
+    <tr><td><strong>成交额(亿)</strong></td><td>105.04</td><td>59.29</td><td class="highlight-cell">138.83</td><td>106.72</td><td>31.29</td></tr>
+    <tr><td><strong>换手率</strong></td><td>35.71%</td><td>31.91%</td><td>17.76%</td><td class="highlight-cell">45.58%</td><td>16.67%</td></tr>
+    <tr>
+      <td><strong>主力资金</strong></td>
+      <td class="num-neg">流出10.27亿</td>
+      <td class="num-neg">流出1.32亿</td>
+      <td class="num-neg">流出9.38亿</td>
+      <td class="num-neg">流出12.13亿</td>
+      <td class="num-pos">流入0.36亿</td>
+    </tr>
+    <tr>
+      <td><strong>超大单</strong></td>
+      <td class="num-neg">流出11.22亿</td>
+      <td class="num-pos">流入2.50亿</td>
+      <td class="num-neg">流出9.76亿</td>
+      <td class="num-neg">流出12.82亿</td>
+      <td>—</td>
+    </tr>
+    <tr><td><strong>市盈率</strong></td><td>-119</td><td>-21</td><td>270</td><td>98</td><td>-296</td></tr>
+    <tr><td><strong>市净率</strong></td><td>61.33</td><td>4.40</td><td>7.33</td><td>2.79</td><td>12.22</td></tr>
+  </table>
+  </div>
+</div>
+
+<!-- ============================= -->
+<!-- Section 3: 个股深度分析 -->
+<!-- ============================= -->
+<div class="section" id="s3">
+  <h2>三、个股深度分析</h2>
+
+  <!-- ---- 3.1 中文在线 ---- -->
+  <div style="margin-top:8px">
+    <div class="stock-header">
+      <h3>3.1 中文在线（SZ300364）</h3>
+      <span class="subtitle">— AI语料龙头，高位巨量见顶信号</span>
+    </div>
+    <div class="tags">
+      <span class="tag">AIGC概念</span><span class="tag">AI语料</span><span class="tag">DeepSeek概念</span>
+      <span class="tag">IP经济</span><span class="tag">短剧游戏</span><span class="tag">数据要素</span><span class="tag">字节概念</span>
+    </div>
+
+    <h4>公司AI布局</h4>
+    <ul>
+      <li>与快手可灵AI深度合作，推动IP向视频化演进</li>
+      <li>自研"逍遥AI"工具链，融入可灵、即梦等模型</li>
+      <li>推出"次元神笔"AI漫剧制作工具</li>
+      <li>首批发布AIGC数据版权倡议书</li>
+    </ul>
+
+    <h4>近5日30分钟K线走势</h4>
+    <table>
+      <tr><th>日期</th><th>开盘</th><th>收盘</th><th>涨跌</th><th>成交额</th><th>走势特征</th></tr>
+      <tr><td>2/5</td><td>30.55</td><td>30.77</td><td>+0.72%</td><td>18.6亿</td><td>早盘冲高31.95后全天回落，上午量占72%</td></tr>
+      <tr><td>2/6</td><td>30.13</td><td>29.40</td><td class="num-neg">-2.42%</td><td>16.1亿</td><td>低开低走，尾盘加速下跌至29.37</td></tr>
+      <tr><td>2/9</td><td>35.28</td><td>35.28</td><td class="num-pos"><strong>一字涨停</strong></td><td>18.2亿</td><td>Seedance催化，竞价直接封死</td></tr>
+      <tr><td>2/10</td><td>42.32</td><td>42.34</td><td class="num-pos"><strong>20cm涨停</strong></td><td>95.5亿</td><td>开盘砸至38.93(-8%)后逐步回封</td></tr>
+      <tr><td>2/11</td><td>42.50</td><td>39.80</td><td class="num-neg"><strong>-6.00%</strong></td><td>105.0亿</td><td>高开持续下行，振幅12.45%，天量105亿</td></tr>
+    </table>
+
+    <h4>分时资金承接分析</h4>
+    <ul>
+      <li><strong>2/10关键信号：</strong>开盘后暴跌至38.93（回落8%），前30分钟成交14250万手（占全天60%），随后2小时对倒拉回封板——<strong>主力对倒拉升</strong>特征</li>
+      <li><strong>2/11确认分歧：</strong>成交105亿（5日均额2倍），主力净流出10.27亿，超大单流出11.22亿——<strong>大资金系统性撤离</strong></li>
+    </ul>
+
+    <h4>技术指标</h4>
+    <table>
+      <tr><th>指标</th><th>数值</th><th>信号</th></tr>
+      <tr><td>MA5/10/20/60</td><td>35.52 / 33.56 / 31.72 / 28.54</td><td>均线多头但股价远离MA5</td></tr>
+      <tr><td>MACD</td><td>DIF=2.07 &gt; DEA=1.39</td><td>金叉，柱放大</td></tr>
+      <tr><td>KDJ</td><td>K=65.9  D=48.5  <strong>J=100.7</strong></td><td>J值超买区</td></tr>
+      <tr><td>RSI(6/12/24)</td><td>69.2 / 66.0 / 63.2</td><td>RSI6从82回落至69</td></tr>
+      <tr><td>布林带</td><td>上轨44.75 / 中轨34.75</td><td>股价在带内104%处</td></tr>
+      <tr><td>ATR(14)</td><td>2.92</td><td>日均波动7.3%</td></tr>
+    </table>
+    <div class="score score-mid">综合评分：52 / 100 — 中性偏空</div>
+
+    <h4>基本面警示</h4>
+    <table>
+      <tr><th>年份</th><th>营收(亿)</th><th>净利润(亿)</th><th>ROE</th></tr>
+      <tr><td>2024</td><td>11.59</td><td class="num-neg">-2.43</td><td>-24.65%</td></tr>
+      <tr><td>2023</td><td>14.09</td><td class="num-pos">0.89</td><td>7.18%</td></tr>
+      <tr><td>2022</td><td>11.80</td><td class="num-neg">-3.62</td><td>-31.38%</td></tr>
+    </table>
+    <ul>
+      <li>预计2025年亏损5.8-7亿元（同比扩大139-188%）</li>
+      <li>资产负债率从37.86%升至66.56%</li>
+      <li>海外短剧销售费用6.6亿（同比+93.65%）——烧钱模式</li>
+      <li>市净率61倍——<strong>纯概念炒作，无业绩支撑</strong></li>
+    </ul>
+
+    <h4>关键价位</h4>
+    <div class="kv-grid">
+      <div class="kv-item"><div class="label">短期压力</div><div class="value" style="color:var(--red)">42.34</div></div>
+      <div class="kv-item"><div class="label">第一支撑 (MA5)</div><div class="value" style="color:var(--green)">35.52</div></div>
+      <div class="kv-item"><div class="label">第二支撑 (MA10)</div><div class="value" style="color:var(--green)">33.56</div></div>
+      <div class="kv-item"><div class="label">ATR止损</div><div class="value" style="color:var(--orange)">33.86</div></div>
+    </div>
+
+    <div class="verdict verdict-danger">
+      <strong>判断：</strong>2/11高位放量大阴线是典型见顶信号。35.71%换手 + 主力净流出10亿，筹码极度松动。短期大概率继续调整至MA5(35.5)附近。除非Seedance 2.0正式发布(2/24)带来新催化，否则高位震荡回落为主。<strong>短线回避。</strong>
+    </div>
+  </div>
+
+  <hr style="margin:32px 0;border:none;border-top:1px dashed var(--border)">
+
+  <!-- ---- 3.2 博纳影业 ---- -->
+  <div>
+    <div class="stock-header">
+      <h3>3.2 博纳影业（SZ001330）</h3>
+      <span class="subtitle">— 春节档+Seedance双催化，连板后最强</span>
+    </div>
+    <div class="tags">
+      <span class="tag">文化传媒</span><span class="tag">AIGC概念</span><span class="tag">字节概念</span>
+      <span class="tag">短剧游戏</span><span class="tag">腾讯概念</span><span class="tag">阿里概念</span>
+    </div>
+
+    <h4>核心催化</h4>
+    <ul>
+      <li><strong>春节档：</strong>联合出品《飞驰人生3》，前两部累计票房50亿+，猫眼想看人数突破70万</li>
+      <li><strong>Seedance：</strong>正宗影视公司，AI降本逻辑直接受益</li>
+    </ul>
+
+    <h4>近5日30分钟K线走势</h4>
+    <table>
+      <tr><th>日期</th><th>开盘</th><th>收盘</th><th>涨跌</th><th>成交额</th><th>走势特征</th></tr>
+      <tr><td>2/5</td><td>9.27</td><td>10.08</td><td class="num-pos">+8.74%</td><td>16.3亿</td><td>低开高走V形反弹</td></tr>
+      <tr><td>2/6</td><td>10.00</td><td>10.31</td><td class="num-pos">+3.10%</td><td>18.4亿</td><td>早盘跳水至9.42后午后强势拉回</td></tr>
+      <tr><td>2/9</td><td>11.34</td><td>11.34</td><td class="num-pos"><strong>一字涨停</strong></td><td>20.3亿</td><td>竞价封死</td></tr>
+      <tr><td>2/10</td><td>12.30</td><td>12.47</td><td class="num-pos"><strong>一字涨停</strong></td><td>10.2亿</td><td>缩量封板（仅10亿）</td></tr>
+      <tr><td>2/11</td><td>12.94</td><td>13.40</td><td class="num-pos"><strong>+7.46%</strong></td><td>59.3亿</td><td>开板仍大涨，超大单净流入2.50亿</td></tr>
+    </table>
+
+    <h4>分时资金承接分析</h4>
+    <ul>
+      <li><strong>2/6 V形反弹极关键：</strong>从10.00跳水至9.42(-5.8%)，午后主力强势拉回，午后量占48%（五只最高）——<strong>有资金主动承接</strong></li>
+      <li><strong>2/9-2/10连续缩量一字板：</strong>2/10成交仅10.2亿，筹码高度锁定</li>
+      <li><strong>2/11开板：</strong>仍涨7.46%，且<strong>超大单净流入2.50亿</strong>（五只中唯一）。主力净流出仅1.32亿</li>
+    </ul>
+
+    <h4>技术指标</h4>
+    <table>
+      <tr><th>指标</th><th>数值</th><th>信号</th></tr>
+      <tr><td>MA5/10/20/60</td><td>11.52 / 10.65 / 9.23 / 8.98</td><td><strong>完美多头排列</strong></td></tr>
+      <tr><td>MACD</td><td>DIF=0.87 &gt; DEA=0.50</td><td>金叉加速放大</td></tr>
+      <tr><td>KDJ</td><td>K=86.6  D=77.5  <strong>J=104.9</strong></td><td>超买但趋势强</td></tr>
+      <tr><td>RSI(6/12/24)</td><td>87.2 / 77.9 / 69.0</td><td>短期超买</td></tr>
+      <tr><td>布林带</td><td>上轨13.83 / 中轨11.30</td><td>突破上轨，强势延续</td></tr>
+      <tr><td>ATR(14)</td><td>0.83</td><td>日均波动6.2%</td></tr>
+    </table>
+    <div class="score score-low">综合评分：39 / 100 — 偏空（5日涨幅42%触发最大减分）</div>
+    <p style="font-size:13px;color:var(--text2)">注：评分模型对短期涨幅过大给予强惩罚。但从资金结构看，博纳是五只中最健康的。</p>
+
+    <h4>基本面</h4>
+    <table>
+      <tr><th>年份</th><th>营收(亿)</th><th>净利润(亿)</th><th>ROE</th></tr>
+      <tr><td>2024</td><td>14.61</td><td class="num-neg">-8.67</td><td>-16.42%</td></tr>
+      <tr><td>2023</td><td>16.08</td><td class="num-neg">-5.53</td><td>-8.90%</td></tr>
+      <tr><td>2022</td><td>20.12</td><td class="num-neg">-0.76</td><td>-1.11%</td></tr>
+    </table>
+    <ul>
+      <li>连续三年亏损，基本面五只中最差</li>
+      <li>但市净率仅4.40（五只最低），估值有安全垫</li>
+      <li>核心看点：春节档票房能否扭转预期</li>
+    </ul>
+
+    <h4>关键价位</h4>
+    <div class="kv-grid">
+      <div class="kv-item"><div class="label">短期压力</div><div class="value" style="color:var(--red)">13.72</div></div>
+      <div class="kv-item"><div class="label">第一支撑</div><div class="value" style="color:var(--green)">12.47</div></div>
+      <div class="kv-item"><div class="label">第二支撑</div><div class="value" style="color:var(--green)">11.34</div></div>
+      <div class="kv-item"><div class="label">ATR止损</div><div class="value" style="color:var(--orange)">11.66</div></div>
+    </div>
+
+    <div class="verdict verdict-ok">
+      <strong>判断：</strong>五只中今日最强。超大单净流入 + 开板仍大涨，主力仍看好。核心催化在春节档（2/17-25）：若《飞驰人生3》票房超预期，节后有二次上攻空间。连续三板后短期回调概率大，<strong>12.5元附近若能站稳，中线可关注。</strong>
+    </div>
+  </div>
+
+  <hr style="margin:32px 0;border:none;border-top:1px dashed var(--border)">
+
+  <!-- ---- 3.3 光线传媒 ---- -->
+  <div>
+    <div class="stock-header">
+      <h3>3.3 光线传媒（SZ300251）</h3>
+      <span class="subtitle">— IP储备最强，基本面最扎实</span>
+    </div>
+    <div class="tags">
+      <span class="tag">AIGC概念</span><span class="tag">IP经济</span><span class="tag">虚拟数字人</span>
+      <span class="tag">虚拟现实</span><span class="tag">阿里概念</span><span class="tag">英伟达概念</span>
+    </div>
+
+    <h4>核心优势</h4>
+    <ul>
+      <li><strong>五只中唯一连续盈利：</strong>2024年净利2.92亿、2023年4.18亿</li>
+      <li>IP储备丰厚：《大鱼海棠》《哪吒》等系列</li>
+      <li>AIGC + IP变现的商业闭环最清晰</li>
+    </ul>
+
+    <h4>近5日30分钟K线走势</h4>
+    <table>
+      <tr><th>日期</th><th>开盘</th><th>收盘</th><th>涨跌</th><th>成交额</th><th>走势特征</th></tr>
+      <tr><td>2/5</td><td>19.60</td><td>20.15</td><td class="num-pos">+2.6%</td><td>~25亿</td><td>温和上涨，分时均匀放量</td></tr>
+      <tr><td>2/6</td><td>20.04</td><td>20.40</td><td class="num-pos">+1.8%</td><td>~25亿</td><td>稳步攀升，无剧烈波动</td></tr>
+      <tr><td>2/9</td><td>~21.0</td><td>21.30</td><td class="num-pos">+4.4%</td><td>~30亿</td><td>Seedance催化，大幅上涨但未涨停</td></tr>
+      <tr><td>2/10</td><td>~24.0</td><td>25.56</td><td class="num-pos"><strong>20cm涨停</strong></td><td>~80亿</td><td>开盘冲高后封板</td></tr>
+      <tr><td>2/11</td><td>24.56</td><td>26.86</td><td class="num-pos"><strong>+5.09%</strong></td><td>138.8亿</td><td>振幅21.66%！盘中冲29.88后回落</td></tr>
+    </table>
+
+    <h4>分时资金承接分析</h4>
+    <ul>
+      <li><strong>2/11振幅21.66%为五只之最：</strong>最高29.88 → 最低24.56 → 收盘26.86。多空<strong>极度分歧</strong></li>
+      <li>成交额138.83亿为全场最大</li>
+      <li>主力流出9.38亿，超大单流出9.76亿——大资金高位兑现</li>
+      <li>但最终收涨5.09%——下跌时仍有资金承接</li>
+    </ul>
+
+    <h4>技术指标</h4>
+    <table>
+      <tr><th>指标</th><th>数值</th><th>信号</th></tr>
+      <tr><td>MA5/10/20/60</td><td>23.00 / 21.17 / 18.60 / 17.44</td><td><strong>完美多头排列</strong></td></tr>
+      <tr><td>MACD</td><td>DIF=1.80 &gt; DEA=1.02</td><td>金叉强势放大</td></tr>
+      <tr><td>KDJ</td><td>K=84.3  D=81.4  J=90.3</td><td>高位超买</td></tr>
+      <tr><td>RSI(6/12/24)</td><td><strong>90.9 / 86.5 / 80.4</strong></td><td><strong>全面极度超买</strong></td></tr>
+      <tr><td>布林带</td><td>上轨27.85 / 中轨22.52</td><td>突破上轨119%</td></tr>
+      <tr><td>ATR(14)</td><td>1.49</td><td>日均波动5.5%</td></tr>
+    </table>
+    <div class="score score-mid">综合评分：44 / 100 — 中性偏空</div>
+
+    <h4>基本面（五只最佳）</h4>
+    <table>
+      <tr><th>年份</th><th>营收(亿)</th><th>净利润(亿)</th><th>ROE</th></tr>
+      <tr><td>2024</td><td>15.86</td><td class="num-pos"><strong>2.92</strong></td><td>3.33%</td></tr>
+      <tr><td>2023</td><td>15.46</td><td class="num-pos"><strong>4.18</strong></td><td>4.81%</td></tr>
+      <tr><td>2022</td><td>7.55</td><td class="num-neg">-7.13</td><td>-8.63%</td></tr>
+    </table>
+
+    <h4>关键价位</h4>
+    <div class="kv-grid">
+      <div class="kv-item"><div class="label">短期压力</div><div class="value" style="color:var(--red)">29.88</div></div>
+      <div class="kv-item"><div class="label">心理关口</div><div class="value" style="color:var(--red)">30.00</div></div>
+      <div class="kv-item"><div class="label">第一支撑</div><div class="value" style="color:var(--green)">25.56</div></div>
+      <div class="kv-item"><div class="label">第二支撑 (MA5)</div><div class="value" style="color:var(--green)">23.00</div></div>
+    </div>
+
+    <div class="verdict">
+      <strong>判断：</strong>RSI(12)=86.5为五只最高，中期也极度超买。139亿天量需时间消化。但光线是五只中<strong>中线逻辑最硬的</strong>（真实盈利 + IP储备 + AI赋能）。<strong>短期回调至23-25元区间是较好的中线布局时机。</strong>
+    </div>
+  </div>
+
+  <hr style="margin:32px 0;border:none;border-top:1px dashed var(--border)">
+
+  <!-- ---- 3.4 捷成股份 ---- -->
+  <div>
+    <div class="stock-header">
+      <h3>3.4 捷成股份（SZ300182）</h3>
+      <span class="subtitle">— Sora概念+版权库龙头，涨幅最大风险最高</span>
+    </div>
+    <div class="tags">
+      <span class="tag">AI语料</span><span class="tag">Sora概念</span><span class="tag">DeepSeek概念</span>
+      <span class="tag">AIGC</span><span class="tag">华为概念</span><span class="tag">IP经济</span><span class="tag">短剧游戏</span>
+    </div>
+
+    <h4>核心逻辑</h4>
+    <ul>
+      <li><strong>影视版权库龙头：</strong>20万小时影视视听素材，AI视频训练天然语料供给方</li>
+      <li>与华为云签署视频大模型合作协议</li>
+      <li>ChatPV 3.0已集成DeepSeek，实现"一键成片"</li>
+      <li>Seedance/Sora概念最直接受益方</li>
+    </ul>
+
+    <h4>近5日30分钟K线走势</h4>
+    <table>
+      <tr><th>日期</th><th>开盘</th><th>收盘</th><th>涨跌</th><th>成交额</th><th>走势特征</th></tr>
+      <tr><td>2/5</td><td>5.92</td><td>6.00</td><td>+1.35%</td><td>6.6亿</td><td>窄幅震荡，量能低迷</td></tr>
+      <tr><td>2/6</td><td>5.92</td><td>5.87</td><td class="num-neg">-0.84%</td><td>6.5亿</td><td>尾盘下跌，成交清淡</td></tr>
+      <tr><td>2/9</td><td>6.43</td><td>7.04</td><td class="num-pos"><strong>20cm涨停</strong></td><td>35.9亿</td><td>上午量占96.6%，主力早盘集中建仓</td></tr>
+      <tr><td>2/10</td><td>8.00</td><td>8.45</td><td class="num-pos"><strong>20cm涨停</strong></td><td>37.4亿</td><td>竞价直封，缩量封板</td></tr>
+      <tr><td>2/11</td><td>8.30</td><td>8.85</td><td class="num-pos">+4.73%</td><td>106.7亿</td><td>冲高9.46后回落，换手45.58%</td></tr>
+    </table>
+
+    <h4>分时资金承接分析</h4>
+    <ul>
+      <li><strong>2/9爆发：</strong>开盘30分钟成交35325万手（占全天67%），典型<strong>主力早盘集中建仓封板</strong></li>
+      <li><strong>2/10缩量封板：</strong>竞价直封，开盘一根K占98.5%上午量。筹码极度锁定</li>
+      <li><strong>2/11风险暴露：</strong>换手45.58%为<strong>五只之最</strong>；主力流出12.13亿、超大单流出12.82亿，均为<strong>五只之最</strong></li>
+    </ul>
+
+    <h4>技术指标</h4>
+    <table>
+      <tr><th>指标</th><th>数值</th><th>信号</th></tr>
+      <tr><td>MA5/10/20/60</td><td>7.24 / 6.64 / 6.25 / 5.91</td><td><strong>完美多头排列</strong></td></tr>
+      <tr><td>MACD</td><td>DIF=0.45 &gt; DEA=0.19</td><td>金叉放大</td></tr>
+      <tr><td>KDJ</td><td>K=74.7  D=59.6  <strong>J=104.9</strong></td><td>超买</td></tr>
+      <tr><td>RSI(6/12/24)</td><td><strong>90.9 / 83.7 / 75.9</strong></td><td>RSI6极度超买</td></tr>
+      <tr><td>布林带</td><td>上轨9.46 / 中轨7.01</td><td>突破上轨125%</td></tr>
+      <tr><td>ATR(14)</td><td>0.45</td><td>日均波动5.1%</td></tr>
+    </table>
+    <div class="score score-low">综合评分：33 / 100 — 偏空（五只最低）</div>
+
+    <h4>基本面</h4>
+    <table>
+      <tr><th>年份</th><th>营收(亿)</th><th>净利润(亿)</th><th>ROE</th></tr>
+      <tr><td>2024</td><td>28.66</td><td class="num-pos">2.38</td><td>2.90%</td></tr>
+      <tr><td>2023</td><td>28.00</td><td class="num-pos">4.50</td><td>5.67%</td></tr>
+      <tr><td>2022</td><td>39.07</td><td class="num-pos">5.21</td><td>7.05%</td></tr>
+    </table>
+
+    <h4>关键价位</h4>
+    <div class="kv-grid">
+      <div class="kv-item"><div class="label">短期压力</div><div class="value" style="color:var(--red)">9.46</div></div>
+      <div class="kv-item"><div class="label">第一支撑</div><div class="value" style="color:var(--green)">8.45</div></div>
+      <div class="kv-item"><div class="label">第二支撑</div><div class="value" style="color:var(--green)">7.04</div></div>
+      <div class="kv-item"><div class="label">ATR止损</div><div class="value" style="color:var(--orange)">7.92</div></div>
+    </div>
+
+    <div class="verdict verdict-danger">
+      <strong>判断：</strong>5日涨幅48.5%、换手45.6%、主力流出12.1亿均为五只之最——<strong>短期透支最严重</strong>。高位追入风险极大。Seedance 2.0在2/24正式发布可能带来脉冲，否则大概率回调至7-8元。<strong>短线应回避，中线关注7元附近支撑。</strong>
+    </div>
+  </div>
+
+  <hr style="margin:32px 0;border:none;border-top:1px dashed var(--border)">
+
+  <!-- ---- 3.5 每日互动 ---- -->
+  <div>
+    <div class="stock-header">
+      <h3>3.5 每日互动（SZ300766）</h3>
+      <span class="subtitle">— DeepSeek+大数据，独立于传媒主线</span>
+    </div>
+    <div class="tags">
+      <span class="tag">DeepSeek概念</span><span class="tag">AI语料</span><span class="tag">大数据</span>
+      <span class="tag">数据要素</span><span class="tag">云计算</span><span class="tag">华为概念</span><span class="tag">鸿蒙概念</span>
+    </div>
+
+    <h4>核心逻辑（与其他四只不同）</h4>
+    <ul>
+      <li><strong>主营大数据服务</strong>，非传媒股。驱动逻辑是"DeepSeek + 数据智能"</li>
+      <li>已完成DeepSeek私有化部署，用于业务垂直场景和研发提效</li>
+      <li>2月5日因DeepSeek概念20%涨停</li>
+      <li>与传媒板块走势<strong>相对独立</strong></li>
+    </ul>
+
+    <h4>近5日30分钟K线走势</h4>
+    <table>
+      <tr><th>日期</th><th>开盘</th><th>收盘</th><th>涨跌</th><th>成交额</th><th>走势特征</th></tr>
+      <tr><td>2/5</td><td>40.78</td><td>42.07</td><td class="num-pos">+3.16%</td><td>13.1亿</td><td>上午量占75%，走势平稳</td></tr>
+      <tr><td>2/6</td><td>41.35</td><td>43.24</td><td class="num-pos">+4.57%</td><td>18.1亿</td><td>上午量仅占66%（有午后买入）</td></tr>
+      <tr><td>2/9</td><td>44.22</td><td>45.61</td><td class="num-pos">+3.14%</td><td>26.7亿</td><td>午后比上午活跃（55%/45%）</td></tr>
+      <tr><td>2/10</td><td>45.62</td><td>47.30</td><td class="num-pos">+3.68%</td><td>37.5亿</td><td>午后冲49.61后回落</td></tr>
+      <tr><td>2/11</td><td>47.00</td><td>48.60</td><td class="num-pos">+2.75%</td><td>31.3亿</td><td>走势最平稳，冲49.23后温和回落</td></tr>
+    </table>
+
+    <h4>分时资金承接分析</h4>
+    <ul>
+      <li><strong>午后买入意愿强：</strong>2/9上午仅占55%、2/10仅占49%——说明<strong>机构在午后分批建仓</strong>，而非游资竞价抢筹</li>
+      <li><strong>唯一主力净流入0.36亿</strong>（其他四只都大幅流出）</li>
+      <li>量比仅1.23x（其他四只2-4.5x），成交温和有序</li>
+      <li><strong>筹码离散度仅4.1%</strong>（其他四只9-14%），高度集中</li>
+    </ul>
+
+    <h4>技术指标</h4>
+    <table>
+      <tr><th>指标</th><th>数值</th><th>信号</th></tr>
+      <tr><td>MA5/10/20/60</td><td>45.36 / 44.39 / 42.11 / 37.46</td><td><strong>完美多头排列</strong></td></tr>
+      <tr><td>MACD</td><td>DIF=2.09 &gt; DEA=1.99</td><td>金叉，柱缩小（需关注）</td></tr>
+      <tr><td>KDJ</td><td>K=68.0  D=53.5  J=96.9</td><td>偏高但未极端</td></tr>
+      <tr><td>RSI(6/12/24)</td><td>74.5 / 67.4 / 63.4</td><td><strong>正常偏强区间</strong></td></tr>
+      <tr><td>布林带</td><td>上轨49.81 / 中轨44.94</td><td>略超上轨113%</td></tr>
+      <tr><td>ATR(14)</td><td>3.07</td><td>日均波动6.3%</td></tr>
+    </table>
+    <div class="score score-high">综合评分：59 / 100 — 中性偏多（五只最高）</div>
+
+    <h4>基本面</h4>
+    <table>
+      <tr><th>年份</th><th>营收(亿)</th><th>净利润(亿)</th><th>ROE</th></tr>
+      <tr><td>2024</td><td>4.70</td><td class="num-neg">-0.65</td><td>-4.13%</td></tr>
+      <tr><td>2023</td><td>4.30</td><td class="num-neg">-0.50</td><td>-3.08%</td></tr>
+      <tr><td>2022</td><td>5.26</td><td class="num-pos">0.26</td><td>1.56%</td></tr>
+    </table>
+
+    <h4>关键价位</h4>
+    <div class="kv-grid">
+      <div class="kv-item"><div class="label">短期压力</div><div class="value" style="color:var(--red)">49.23</div></div>
+      <div class="kv-item"><div class="label">心理关口</div><div class="value" style="color:var(--red)">50.00</div></div>
+      <div class="kv-item"><div class="label">第一支撑 (MA5)</div><div class="value" style="color:var(--green)">45.36</div></div>
+      <div class="kv-item"><div class="label">第二支撑 (MA10)</div><div class="value" style="color:var(--green)">44.39</div></div>
+    </div>
+
+    <div class="verdict verdict-ok">
+      <strong>判断：</strong>五只中<strong>风险收益比最好的品种</strong>。走势独立于传媒炒作，资金结构健康（主力净流入、筹码集中、换手适中）。若传媒板块整体回调，它受牵连最小。<strong>50元整数关口若有效突破可看高一线，MA5(45.4)附近是短线回踩支撑。</strong>
+    </div>
+  </div>
+</div>
+
+<!-- ============================= -->
+<!-- Section 4: 技术评分 -->
+<!-- ============================= -->
+<div class="section" id="s4">
+  <h2>四、技术评分横向对比</h2>
+
+  <pre class="mermaid">
+graph LR
+    subgraph 综合评分排名
+        A["1. 每日互动 59分 中性偏多"] --> B["2. 中文在线 52分 中性偏空"]
+        B --> C["3. 光线传媒 44分 中性偏空"]
+        C --> D["4. 博纳影业 39分 偏空"]
+        D --> E["5. 捷成股份 33分 偏空"]
+    end
+  </pre>
+
+  <h4>评分要素对比</h4>
+  <div style="overflow-x:auto">
+  <table>
+    <tr><th>评分项</th><th>中文在线</th><th>博纳影业</th><th>光线传媒</th><th>捷成股份</th><th>每日互动</th></tr>
+    <tr><td>均线排列</td><td>+15 多头</td><td>+15 多头</td><td>+15 多头</td><td>+15 多头</td><td>+15 多头</td></tr>
+    <tr><td>MACD</td><td>+10</td><td>+10</td><td>+10</td><td>+10</td><td>+10</td></tr>
+    <tr><td>KDJ</td><td>-8 超买</td><td>-8 超买</td><td>-8 超买</td><td>-8 超买</td><td>-8 超买</td></tr>
+    <tr><td>RSI</td><td>—</td><td class="num-neg">-8 超买</td><td class="num-neg">-8 超买</td><td class="num-neg">-8 超买</td><td>— 正常</td></tr>
+    <tr><td>布林带</td><td>-8</td><td>-8</td><td>-8</td><td>-8</td><td>-8</td></tr>
+    <tr><td>量比</td><td>+3</td><td>+3</td><td>+3</td><td class="num-neg">-3 过大</td><td>—</td></tr>
+    <tr><td>5日涨幅</td><td>-5</td><td class="num-neg"><strong>-10</strong></td><td class="num-neg"><strong>-10</strong></td><td class="num-neg"><strong>-10</strong></td><td>—</td></tr>
+    <tr><td>换手率</td><td class="num-neg">-5</td><td class="num-neg">-5</td><td>—</td><td class="num-neg">-5</td><td>—</td></tr>
+    <tr style="font-weight:700;background:#f1f5f9"><td>合计</td><td>52</td><td>39</td><td>44</td><td>33</td><td style="color:var(--green)">59</td></tr>
+  </table>
+  </div>
+</div>
+
+<!-- ============================= -->
+<!-- Section 5: 两条主线 -->
+<!-- ============================= -->
+<div class="section" id="s5">
+  <h2>五、两条主线深度解析</h2>
+
+  <h3>5.1 Seedance 2.0 主线：受益逻辑与持续性</h3>
+  <pre class="mermaid">
+graph TD
+    S["Seedance 2.0\nAI视频奇点"] --> A["IP内容方\n中文在线/光线传媒"]
+    S --> B["版权数据方\n捷成股份\n20万小时语料"]
+    S --> C["影视制作方\n博纳影业/光线传媒"]
+    S --> D["平台分发方\n字节/快手/腾讯"]
+    A --> E["AI漫剧\n成本降80%"]
+    B --> F["训练数据\n版权授权费"]
+    C --> G["AI降本\n特效3元/个"]
+    D --> H["规模化变现\n渗透率30%+"]
+  </pre>
+  <p><strong>关键时间节点：</strong></p>
+  <ul>
+    <li>2/24 Seedance 2.0正式发布 → 可能迎来第二波催化</li>
+    <li>节后AI短剧/漫剧平台数据验证 → 决定中期逻辑</li>
+  </ul>
+  <p><strong>受益强度排序：</strong>捷成股份(版权库直接受益) &gt; 光线传媒(IP+制作) &gt; 中文在线(AI语料) &gt; 博纳影业(影视制作)</p>
+
+  <h3>5.2 DeepSeek + 国产大模型主线</h3>
+  <pre class="mermaid">
+graph TD
+    D["DeepSeek生态"] --> A["开源框架\nFlashMLA等5个项目"]
+    D --> B["API服务\n成本仅OpenAI 1/30"]
+    D --> C["R2模型\n原定5月 可能提前"]
+    A --> E["算力优化方向\n服务器/芯片股"]
+    B --> F["应用落地方向\n金融/教育/医疗"]
+    C --> G["持续催化\n每日互动直接受益"]
+    F --> H["每日互动\n已完成私有化部署"]
+  </pre>
+  <p><strong>关键时间节点：</strong></p>
+  <ul>
+    <li>2/17-25 春节假期 → 大模型厂商可能发布新功能抢春节流量</li>
+    <li>DeepSeek R2提前发布的消息随时可能落地</li>
+    <li>春节后各厂商Q1业绩预告 → 验证AI落地效果</li>
+  </ul>
+  <p><strong>受益标的：</strong>每日互动（DeepSeek私有化+数据智能）&gt; 捷成股份（DeepSeek集成ChatPV）&gt; 中文在线（DeepSeek概念标签）</p>
+</div>
+
+<!-- ============================= -->
+<!-- Section 6: 综合预测 -->
+<!-- ============================= -->
+<div class="section" id="s6">
+  <h2>六、综合预测与操作建议</h2>
+
+  <h3>6.1 短期强弱排序</h3>
+  <pre class="mermaid">
+graph TD
+    subgraph 短期强弱
+        S1["1 博纳影业\n开板仍涨7.46%\n超大单净流入\n春节档催化在前"]
+        S2["2 每日互动\n走势独立健康\n唯一主力净流入\n筹码高度集中"]
+        S3["3 光线传媒\n基本面最佳\n但振幅过大\n需消化天量筹码"]
+        S4["4 捷成股份\n逻辑硬但涨幅最大\n换手流出均最高\n获利盘压力最大"]
+        S5["5 中文在线\n高位放量大阴线\n无业绩支撑\n主力系统性撤离"]
+    end
+  </pre>
+
+  <h3>6.2 分场景预判</h3>
+  <div class="scenario">
+    <div class="scenario-card sc-green">
+      <h5>乐观</h5>
+      <div class="pct">30%</div>
+      <p>Seedance正式发布 + 春节档超预期</p>
+      <p>传媒板块二次上攻，博纳/光线创新高</p>
+    </div>
+    <div class="scenario-card sc-yellow">
+      <h5>中性</h5>
+      <div class="pct">45%</div>
+      <p>节前震荡消化 + 春节档达预期</p>
+      <p>高位换手后企稳，分化加剧</p>
+    </div>
+    <div class="scenario-card sc-red">
+      <h5>悲观</h5>
+      <div class="pct">25%</div>
+      <p>热度消退 + 资金节前避险</p>
+      <p>板块回调15-20%，仅每日互动抗跌</p>
+    </div>
+  </div>
+
+  <h3>6.3 操作策略</h3>
+  <div style="overflow-x:auto">
+  <table>
+    <tr><th>股票</th><th>持仓建议</th><th>买入区间</th><th>止损位</th><th>目标位</th><th>时间框架</th></tr>
+    <tr style="background:#dcfce7">
+      <td><strong>每日互动</strong></td><td>可持有/逢低参与</td><td>44-46</td><td>42.22</td><td>50-52</td><td>1-2周</td>
+    </tr>
+    <tr>
+      <td><strong>光线传媒</strong></td><td>等回调再中线布局</td><td>23-25</td><td>23.40</td><td>30+</td><td>2-4周</td>
+    </tr>
+    <tr>
+      <td><strong>博纳影业</strong></td><td>小仓位博春节档</td><td>12-12.5</td><td>11.66</td><td>15+</td><td>节后验证</td>
+    </tr>
+    <tr>
+      <td><strong>捷成股份</strong></td><td>短线回避，中线等回调</td><td>7-7.5</td><td>7.00</td><td>9-10</td><td>等2/24催化</td>
+    </tr>
+    <tr style="background:#fee2e2">
+      <td><strong>中文在线</strong></td><td><strong>回避</strong></td><td>—</td><td>—</td><td>—</td><td>—</td>
+    </tr>
+  </table>
+  </div>
+
+  <h3>6.4 关键时间窗口</h3>
+  <pre class="mermaid">
+timeline
+    title 后续关键时间节点
+    2月12-14日 : 节前最后三个交易日 资金博弈加剧
+    2月17-25日 : 春节档9天 票房数据逐日验证
+    2月24日 : Seedance 2.0正式发布
+    2月26日 : 节后首个交易日 春节档票房兑现或证伪
+    3月初 : DeepSeek R2消息 国产大模型新一轮催化
+  </pre>
+</div>
+
+<!-- ============================= -->
+<!-- Section 7: 风险提示 -->
+<!-- ============================= -->
+<div class="section" id="s7">
+  <h2>七、风险提示</h2>
+  <ol class="risk-list">
+    <li><strong>概念炒作风险：</strong>五只股票（除光线外）基本面均为亏损状态，当前涨幅主要由概念驱动，一旦热度消退可能快速回调</li>
+    <li><strong>春节流动性风险：</strong>节前最后三天资金倾向观望，可能出现集中抛售</li>
+    <li><strong>版权争议风险：</strong>Seedance 2.0已暴露训练数据版权问题，若监管介入可能压制板块情绪</li>
+    <li><strong>业绩证伪风险：</strong>AI降本效果尚未在上市公司财报中体现，商业模式待验证</li>
+    <li><strong>技术面全面超买：</strong>五只股票KDJ/RSI均处于超买区域，短期技术回调压力大</li>
+  </ol>
+</div>
+
+<div class="disclaimer">
+  <strong>免责声明：</strong>本报告仅为个人研究学习之用，不构成投资建议。股市有风险，投资需谨慎。<br>
+  数据截至2026年2月11日收盘
+</div>
+
+</div><!-- /container -->
+
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'neutral', securityLevel: 'loose' });
+</script>
+</body>
+</html>
