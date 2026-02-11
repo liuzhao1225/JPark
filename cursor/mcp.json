@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "cn-a-stock": {
+      "url": "http://82.156.17.205/cnstock/mcp"
+    }
+  }
+}
